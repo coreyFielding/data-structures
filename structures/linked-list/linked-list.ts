@@ -1,13 +1,22 @@
 import Node from "./linkedNode";
 import Comparator from "../../utils/Comparator";
 
-interface ILinkedList {
+interface ILinkedListStruct {
   head: any;
   tail: any;
   compare: any;
 }
 
-export default class LinkedList<ILinkedList, T> {
+interface ILinkedList<T> {
+  prepend(value: T): any;
+  append(value: T): any;
+  delete(value: T): T | null;
+  deleteHead(): T | null;
+  deleteTail(): T | null;
+}
+
+export default class LinkedList<ILinkedListStruct, T>
+  implements ILinkedList<T> {
   private head = null;
   private tail = null;
   private compare = null;
@@ -107,5 +116,17 @@ export default class LinkedList<ILinkedList, T> {
     }
 
     return deletedHead;
+  }
+
+  toArray() {
+    const nodes = [];
+    let currentNode = this.head;
+
+    while (currentNode) {
+      nodes.push(currentNode);
+      currentNode = currentNode.next;
+    }
+
+    return nodes;
   }
 }
