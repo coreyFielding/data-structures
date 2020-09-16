@@ -1,7 +1,13 @@
 import Node from "./linkedNode";
 import Comparator from "../../utils/Comparator";
 
-export default class LinkedList {
+interface ILinkedList {
+  head: any;
+  tail: any;
+  compare: any;
+}
+
+export default class LinkedList<ILinkedList, T> {
   private head = null;
   private tail = null;
   private compare = null;
@@ -13,7 +19,7 @@ export default class LinkedList {
     this.compare = new Comparator(comparatorFunction);
   }
 
-  prepend(value) {
+  prepend(value: T) {
     const newNode = new Node(value, this.head);
     this.head = newNode;
 
@@ -22,7 +28,7 @@ export default class LinkedList {
     return this;
   }
 
-  append(value) {
+  append(value: T) {
     const newNode = new Node(value);
 
     if (!this.head) {
@@ -38,7 +44,7 @@ export default class LinkedList {
     return this;
   }
 
-  delete(value) {
+  delete(value: T): T | null {
     let deletedNode = null;
 
     if (!this.head) return null;
@@ -61,14 +67,14 @@ export default class LinkedList {
       }
     }
 
-    if (this.compare(equal(this.tail.value, value))) {
+    if (this.compare.equal(this.tail.value, value)) {
       this.tail = currentNode;
     }
 
     return deletedNode;
   }
 
-  deleteTail() {
+  deleteTail(): T | null {
     const deletedTail = this.tail;
 
     if (this.head === this.tail) {
@@ -89,7 +95,7 @@ export default class LinkedList {
     return deletedTail;
   }
 
-  deleteHead() {
+  deleteHead(): T | null {
     if (!this.head) return null;
 
     const deletedHead = this.head;

@@ -1,8 +1,13 @@
-export default class Node {
+interface INode<T> {
+  value: T;
+  next: T;
+}
+
+export default class Node<INode, T> {
   private value = null;
   private next = null;
 
-  constructor(value: any, next: any = null) {
+  constructor(value: T, next: T | null = null) {
     this.value = value;
     this.next = next;
   }
